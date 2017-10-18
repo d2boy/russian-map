@@ -3,16 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <script type="text/javascript" src="raphael-min.js"></script>
-    <script type="text/javascript" src="jquery.js"></script>
     <script type="text/javascript" src="russian-map.js"></script>
     <script>
         // запрос на получение json регионов
-        $(document).ready(function() {
-            $.ajax({
-                type: 'get',
-                dataType: 'json',
-                url: './with-districts.json',
-                success: function(data) {
+        window.onload = function() {
+            fetch('./with-districts.json').then(function(response) {
+                response.json().then(function(data) {
                     new RussianMap({
                         viewPort: data.viewPort,
                         mapId: 'russian-map',
@@ -35,9 +31,9 @@
                             console.log('out on ' + this.region.name);
                         }
                     }, data.regions);
-                }
+                });
             });
-        });
+        };
     </script>
 </head>
 <body>
