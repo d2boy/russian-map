@@ -13,6 +13,8 @@
  * - mouseMoveAttr - атрибуты для полигона при наведении мышки
  * - onMouseMove - событие при наведении мышки на регион
  * - onMouseOut - событие при убирании мышки с региона
+ * - viewPort - смещение координат в SVG
+ * - viewSize - видимые границы в SVG
  *
  * @param {Object} options Опции
  * @param {Array} regions Регионы, каждый элемент состоит из:
@@ -25,9 +27,11 @@ var RussianMap = function(options, regions) {
     var mapId = options.mapId;
     var width = options.width;
     var height = options.height;
+    var viewPort = options.viewPort || '0 0 1134 620';
+    var viewSize = options.viewSize || '700 700';
 
     // канва для рисования регионов
-    var R = Raphael(mapId, width, height, '0 0 1134 620', '700 700');
+    var R = Raphael(mapId, width, height, viewPort, viewSize);
 
     // дефолтовые атрибуты для контуров регионов
     var defaultAttr = options.defaultAttr || {

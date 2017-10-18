@@ -12,8 +12,9 @@
                 type: 'get',
                 dataType: 'json',
                 url: './with-districts.json',
-                success: function(regions) {
+                success: function(data) {
                     new RussianMap({
+                        viewPort: data.viewPort,
                         mapId: 'russian-map',
                         width: 862,
                         height: 497,
@@ -33,7 +34,7 @@
                         onMouseOut: function(event) {
                             console.log('out on ' + this.region.name);
                         }
-                    }, regions);
+                    }, data.regions);
                 }
             });
         });
