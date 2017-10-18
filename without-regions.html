@@ -1,0 +1,45 @@
+<!DOCTIPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="raphael-min.js"></script>
+    <script type="text/javascript" src="jquery.js"></script>
+    <script type="text/javascript" src="russian-map.js"></script>
+    <script>
+        // запрос на получение json регионов
+        $(document).ready(function() {
+            $.ajax({
+                type: 'get',
+                dataType: 'json',
+                url: './without-regions.json',
+                success: function(regions) {
+                    new RussianMap({
+                        mapId: 'russian-map',
+                        width: 862,
+                        height: 497,
+                        // дефолтовые атрибуты для контуров регионов
+                        defaultAttr: {
+                            fill: '#d8d8d8', // цвет которым закрашивать
+                            stroke: '#ffffff', // цвет границы
+                            'stroke-width': 1, // ширина границы
+                            'stroke-linejoin': 'round' // скруглять углы
+                        },
+                        mouseMoveAttr: {
+                            fill: '#25669e'
+                        },
+                        onMouseMove: function(event) {
+                            console.log('mouse on ' + this.region.name);
+                        },
+                        onMouseOut: function(event) {
+                            console.log('out on ' + this.region.name);
+                        }
+                    }, regions);
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+<div id="russian-map"></div>
+</body>
+</html>
