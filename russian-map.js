@@ -20,6 +20,8 @@
  * @param {Array} regions Регионы, каждый элемент состоит из:
  *  ident - идентификатора,
  *  name - названия,
+ *  attr - необязательное, атрибуты, которые будут перекрывать атрибуты по умолчанию,
+ *  moveAttr - необязательное, атрибуты, которые будут перекрывать атрибуты при наведении,
  *  paths - массив атрибутов path
  *  polygons - массив атрибутов polygon
  */
@@ -54,12 +56,12 @@ var RussianMap = function(options, regions) {
         // установить всем полигонам в регионе дефолтовые атрибуты
         if (region.paths !== undefined) {
             for (var p in region.paths) {
-                region.paths[p].attr(mouseMoveAttr);
+                region.paths[p].attr(region.moveAttr || mouseMoveAttr);
             }
         }
         if (region.polygons !== undefined) {
             for (var p in region.polygons) {
-                region.polygons[p].attr(mouseMoveAttr);
+                region.polygons[p].attr(region.moveAttr || mouseMoveAttr);
             }
         }
         if (options.onMouseMove) {
@@ -75,12 +77,12 @@ var RussianMap = function(options, regions) {
         // установить всем полигонам в регионе дефолтовые атрибуты
         if (region.paths !== undefined) {
             for (var p in region.paths) {
-                region.paths[p].attr(defaultAttr);
+                region.paths[p].attr(region.attr || defaultAttr);
             }
         }
         if (region.polygons !== undefined) {
             for (var p in region.polygons) {
-                region.polygons[p].attr(defaultAttr);
+                region.polygons[p].attr(region.attr || defaultAttr);
             }
         }
         if (options.onMouseOut) {
@@ -97,7 +99,7 @@ var RussianMap = function(options, regions) {
         // прорисовка многоугольников
         if (region.paths !== undefined) {
             for (var p in region.paths) {
-                var path = R.path(region.paths[p]).attr(defaultAttr);
+                var path = R.path(region.paths[p]).attr(region.attr || defaultAttr);
                 path.region = region;
                 path.mouseover(onMouseMove);
                 path.mouseout(onMouseOut);
@@ -107,7 +109,7 @@ var RussianMap = function(options, regions) {
         // прорисовка полигнов: также через тег path, только конечная точка соединяется с начальной
         if (region.polygons !== undefined) {
             for (var p in region.polygons) {
-                var polygon = R.path('M' + region.polygons[p]).attr(defaultAttr);
+                var polygon = R.path('M' + region.polygons[p]).attr(region.attr || defaultAttr);
                 polygon.region = region;
                 polygon.mouseover(onMouseMove);
                 polygon.mouseout(onMouseOut);
