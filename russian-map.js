@@ -13,6 +13,7 @@
  * - mouseMoveAttr - атрибуты для полигона при наведении мышки
  * - onMouseMove - событие при наведении мышки на регион
  * - onMouseOut - событие при убирании мышки с региона
+ * - onMouseClick - событие при клике
  * - viewPort - смещение координат в SVG
  * - viewSize - видимые границы в SVG
  *
@@ -70,6 +71,16 @@ var RussianMap = function(options, regions) {
     };
 
     /**
+     * Событие при клике на полигон
+     */
+    var onMouseClick = function(event) {
+        if (options.onMouseClick) {
+            var region = this.region;
+            options.onMouseClick.call(this, event);
+        }
+    }
+
+    /**
      * Событие onMouseOut для path или polygon внутри контекста полигона (можно использовать this)
      */
     var onMouseOut = function(event) {
@@ -103,6 +114,7 @@ var RussianMap = function(options, regions) {
                 path.region = region;
                 path.mouseover(onMouseMove);
                 path.mouseout(onMouseOut);
+                path.click(onMouseClick);
                 region.paths[p] = path;
             }
         }
@@ -113,6 +125,7 @@ var RussianMap = function(options, regions) {
                 polygon.region = region;
                 polygon.mouseover(onMouseMove);
                 polygon.mouseout(onMouseOut);
+                polygon.click(onMouseClick);
                 region.polygons[p] = polygon;
             }
         }
